@@ -421,18 +421,8 @@ class ImageUploadTests(TestCase):
     if not os.path.exists(settings.MEDIA_ROOT):
         os.makedirs(settings.MEDIA_ROOT)
 
-    # def teardown(self):
-    #     self.recipe.image.delete()
-
-    def tearDown(self):
-        # Clean up the test media directory
-        if os.path.exists(settings.MEDIA_ROOT):
-            for root, dirs, files in os.walk(settings.MEDIA_ROOT):
-                for f in files:
-                    os.unlink(os.path.join(root, f))
-                for d in dirs:
-                    os.rmdir(os.path.join(root, d))
-            os.rmdir(settings.MEDIA_ROOT)
+    def teardown(self):
+        self.recipe.image.delete()
 
     def test_upload_image(self):
         """Test uploading an image  to a recipe."""

@@ -147,5 +147,3 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
 }
-
-MEDIA_ROOT = os.path.join(tempfile.gettempdir(), "test_media/")
