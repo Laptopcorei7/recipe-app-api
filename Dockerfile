@@ -37,6 +37,12 @@ RUN chown -R django-user:django-user /vol
 
 RUN chmod -R 755 /vol
 
+RUN mkdir -p /app/uploads/recipe
+
+RUN chown -R django-user:django-user /vol /app/uploads
+
+RUN chmod -R 755 /vol /app/uploads
+
 ENV PATH="/py/bin:$PATH"
 
 USER django-user
