@@ -35,3 +35,4 @@ services:
 volumes:
   dev-db-data:
   dev-static-data:
+  app-uploads:
