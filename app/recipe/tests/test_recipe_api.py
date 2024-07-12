@@ -418,9 +418,6 @@ class ImageUploadTests(TestCase):
         self.client.force_authenticate(self.user)
         self.recipe = create_recipe(user=self.user)
 
-    if not os.path.exists(settings.MEDIA_ROOT):
-        os.makedirs(settings.MEDIA_ROOT)
-
     def teardown(self):
         self.recipe.image.delete()
 
