@@ -15,10 +15,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up environment
-        run: |
-          sudo mkdir -p /app/uploads/recipe
-          sudo chmod -R 777 /app/uploads
+      - name: Build Docker containers
+        run: docker-compose build
+      - name: Set up uploads directory in container
+        run: docker-compose run --rm app sh -c "mkdir -p /app/uploads/recipe && chmod -R 777 /app/uploads"
       - name: Test
         run: docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
       - name: Lint
