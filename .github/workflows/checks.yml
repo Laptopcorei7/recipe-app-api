@@ -15,6 +15,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Prepare test database
+        run: |
+          python manage.py wait_for_db
+          python manage.py migrate
+          python manage.py collectstatic --no-input
+      - name: Create media directory
+        run: mkdir -p /tmp/test_media/
       - name: Clear test media directory
         run: rm -rf /var/tmp/test_media/uploads/*
       - name: Test
