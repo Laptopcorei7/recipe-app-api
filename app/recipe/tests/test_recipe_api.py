@@ -7,6 +7,7 @@ import tempfile
 from decimal import Decimal
 
 from core.models import Ingredient, Recipe, Tag
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -417,8 +418,21 @@ class ImageUploadTests(TestCase):
         self.client.force_authenticate(self.user)
         self.recipe = create_recipe(user=self.user)
 
+    if not os.path.exists(settings.MEDIA_ROOT):
+        os.makedirs(settings.MEDIA_ROOT)
+
+    # def teardown(self):
+    #     self.recipe.image.delete()
+
     def tearDown(self):
-        self.recipe.image.delete()
+        # Clean up the test media directory
+        if os.path.exists(settings.MEDIA_ROOT):
+            for root, dirs, files in os.walk(settings.MEDIA_ROOT):
+                for f in files:
+                    os.unlink(os.path.join(root, f))
+                for d in dirs:
+                    os.rmdir(os.path.join(root, d))
+            os.rmdir(settings.MEDIA_ROOT)
 
     def test_upload_image(self):
         """Test uploading an image  to a recipe."""
