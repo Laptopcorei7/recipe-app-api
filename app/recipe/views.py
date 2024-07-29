@@ -46,7 +46,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         return (
             queryset.filter(user=self.request.user)
-            .order_by("id")
+            .order_by("-id")
             .distinct()
         )
 
